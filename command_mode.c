@@ -1555,6 +1555,45 @@ static void cmd_win_activate(char *arg)
 	}
 }
 
+static void cmd_set_playing(char *arg)
+{
+	struct track_info *info = NULL;
+	struct shuffle_track *previous = NULL, *next = NULL;
+	struct rb_root *shuffle_root = NULL;
+
+	if (cur_view == TREE_VIEW || cur_view == SORTED_VIEW) {
+		if (lib_cur_track)
+			previous = &lib_cur_track->shuffle_track;
+		shuffle_root = &lib_shuffle_root;
+	}
+
+	switch (cur_view) {
+	case TREE_VIEW:
+		info = tree_activate_selected();
+		next = &lib_cur_track->shuffle_track;
+		break;
+	case SORTED_VIEW:
+		info = sorted_activate_selected();
+		next = &lib_cur_track->shuffle_track;
+		break;
+	case PLAYLIST_VIEW:
+		info = pl_play_selected_row();
+		break;
+	default:
+		info_msg(":set-playing only works in views 1-3");
+		return;
+	}
+
+	if (info) {
+		if (shuffle && next)
+			shuffle_insert(shuffle_root, previous, next);
+		/* update lib/pl mode */
+		if (cur_view < 2)
+			play_library = 1;
+		if (cur_view == 2)
+			play_library = 0;
+	}
+}
 static void cmd_win_mv_after(char *arg)
 {
 	switch (cur_view) {
@@ -2551,6 +2590,7 @@ struct command commands[] = {
 	{ "unbind",                cmd_unbind,           1, 1,  expand_unbind_args,   0, 0          },
 	{ "unmark",                cmd_unmark,           0, 0,  NULL,                 0, 0          },
 	{ "update-cache",          cmd_update_cache,     0, 1,  NULL,                 0, 0          },
+	{ "set-playing",           cmd_set_playing,      0, 0,  NULL,                 0, 0          },
 	{ "view",                  cmd_view,             1, 1,  NULL,                 0, 0          },
 	{ "vol",                   cmd_vol,              1, 2,  NULL,                 0, 0          },
 	{ "w",                     cmd_save,             0, 1,  expand_load_save,     0, CMD_UNSAFE },

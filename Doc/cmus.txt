@@ -629,6 +629,12 @@ update-cache [-f]
 	-f
 		Update all files. Same as quit, rm -f $XDG_CONFIG_HOME/cmus/cache, start cmus.
 
+set-playing
+	Set the track under the cursor as the "playing" track without affecting
+	playback. Along with the queue, this can be used to jump to a different
+	part of a playlist or the library without interrupting the currently
+	playing track.
+
 view <name or 1-7>
 	Switches active view.
 
