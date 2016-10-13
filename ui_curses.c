@@ -92,7 +92,7 @@ char *tgoto(const char *cap, int col, int row);
 volatile sig_atomic_t cmus_running = 1;
 int ui_initialized = 0;
 enum ui_input_mode input_mode = NORMAL_MODE;
-int cur_view = TREE_VIEW;
+int cur_view = PLAYLIST_VIEW;
 int prev_view = -1;
 struct searchable *searchable;
 char *lib_filename = NULL;
