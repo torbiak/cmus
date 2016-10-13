@@ -701,6 +701,12 @@ update-cache [-f]
 version
 	Prints the version information.
 
+set-playing
+	Set the track under the cursor as the "playing" track without affecting
+	playback. Along with the queue, this can be used to jump to a different
+	part of a playlist or the library without interrupting the currently
+	playing track.
+
 view <name or 1-7>
 	Changes the active view.
 
